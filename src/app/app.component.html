@@ -1,0 +1,134 @@
+<div class="card">
+  <h5 class="card-header card-header-color">User Registration</h5>
+  <div class="card-body">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="form-group col">
+          <label>Title</label>
+          <select class="form-control" formControlName="title" 
+          [ngClass]="{'is invalid' : submitted && f['title'].errors}">
+            <option value="mr">Mr</option>
+            <option value="miss">Miss</option>
+            <option value="ms">Ms</option>
+            <option value="mrs">Mrs</option>
+          </select>
+          <div *ngIf="submitted && f['title'].errors" class="invalid-feedback">
+           <div *ngIf="f['title'].errors['required']">title is required !!</div>
+          </div>
+        </div>
+        <div class="form-group col-5">
+          <label>First Name</label>
+          <input type="text" class="form-control" formControlName="firstName"
+          [ngClass]="{'is invalid' : submitted && f['firstName'].errors}">
+          <div *ngIf="submitted && f['firstName'].errors" class="invalid-feedback">
+            <div *ngIf="f['firstName'].errors['required']">First name is required !!</div>
+            <div *ngIf="f['firstName'].errors['minlength']">First name should ne atleast 2 char long!!</div>
+            <div *ngIf="f['firstName'].errors['maxlength']">First name should be more then 14 char long!!</div>
+           </div>
+         </div>
+      
+        <div class="form-group col-5">
+          <label>Last Name</label>
+          <input type="text" class="form-control" formControlName="lastName"
+          [ngClass]="{'is invalid' : submitted && f['lastName'].errors}">
+          <div *ngIf="submitted && f['lastName'].errors" class="invalid-feedback">
+            <div *ngIf="f['lastName'].errors['required']">Last name is required !!</div>
+            <div *ngIf="f['lastName'].errors['minlength']">Last name should ne atleast 2 char long!!</div>
+            <div *ngIf="f['lastName'].errors['maxlength']">Last name should  be more then 10 char long!!</div>
+           </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="form-group col">
+          <label>Email id</label>
+          <input type="text" class="form-control" formControlName="email"
+          [ngClass]="{'is invalid' : submitted && f['email'].errors}">
+          <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+            <div *ngIf="f['email'].errors['required']">Email id is required !!</div>
+            <div *ngIf="f['email'].errors['email']">Email id must be valid email address!!</div>
+           </div>
+        </div>
+        <div class="form-group col">
+          <label>Date of birth</label>
+          <input type="date" class="form-control" formControlName="dob"
+          [ngClass]="{'is invalid' : submitted && f['dob'].errors}">
+          <div *ngIf="submitted && f['dob'].errors" class="invalid-feedback">
+            <div *ngIf="f['dob'].errors['required']">Date of birth is required !!</div>
+            <div *ngIf="f['dob'].errors['pattern']">Date of birth must be a valid date in the formate YYYY-MM-DD!!</div>
+           </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="form-group col">
+          <label>Password</label>
+          <input type="password" class="form-control" formControlName="password"
+          [ngClass]="{'is invalid' : submitted && f['password'].errors}">
+          <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+            <div *ngIf="f['password'].errors['required']">Password is required !!</div>
+            <div *ngIf="f['password'].errors['minlength']">Password must be 6 char long!!</div>
+           </div>
+        </div>
+        <div class="form-group col">
+          <label>Conform Password</label>
+          <input type="password" class="form-control" formControlName="conformPassword"
+          [ngClass]="{'is invalid' : submitted && f['conformPassword'].errors}">
+          <div *ngIf="submitted && f['conformPassword'].errors" class="invalid-feedback">
+            <div *ngIf="f['conformPassword'].errors['required']">ConformPassword is required !!</div>
+            <div *ngIf="f['conformPassword'].errors['Mustmatch']">Password and ConformPassword must be same !!</div>
+           </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="form-group form-check">
+         
+          <input type="checkbox" class="form-check-input" formControlName="acceptTerms"
+          [ngClass]="{'is invalid' : submitted && f['acceptTerms'].errors}">
+          <label for="acceptTerms" class="form-check-label">Term and Conditions</label>
+          <div *ngIf="submitted && f['acceptTerms'].errors" class="invalid-feedback">
+            <div *ngIf="f['acceptTerms'].errors['required']">Accept Terms & conditions is required !!</div>
+           </div>
+       
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group text-center">
+          <button type="submit" class="btn btn-success me-2" >{{buttonText}}</button>
+          <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="card">
+  <h5 class="card-header card-header-list-color">User List</h5>
+  <div class="card-body">
+    <div class="form-row">
+      <div class="form-group col">
+        <table class="table table-striped">
+          <tr>
+            <th>Title </th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Date of birth</th>
+            <th>Email</th> 
+            <th>Action1</th>
+            <th>Action2</th>
+          </tr>
+          <tr *ngFor="let user of users">
+            <td>{{user.title}}</td>
+            <td>{{user.firstName}}</td>
+            <td>{{user.lastName}}</td>
+            <td>{{user.dob}}</td>
+            <td>{{user.email}}</td>
+            <td>
+              <i class="fa fa-edit" style="color: green;" (click)="Edit(user.id)"></i>
+            </td>
+            <td>
+              <i class="fa fa-trash-o" style="color: red;" (click)="Delete(user.id)"></i>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
